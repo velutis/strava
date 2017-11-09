@@ -3,11 +3,11 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     </head>
     <body>
-        <span id="hello">hello</span>
+        <span id="hello">hello 1</span>
         <script>
             $(document).ready(function() {
-                $.get("https://www.strava.com/api/v3/athlete/activities?per_page=1&access_token=83ebeabdec09f6670863766f792ead24d61fe3f9", function(data) {
-                    $('#hello').html(data);
+                $.get("https://www.strava.com/api/v3/clubs/322407/members?access_token=0b2631b0cb7583a50e0e76a90848723a1a676717", function(results) {
+                    $('#hello').html(results);
                 });
             });
         </script>

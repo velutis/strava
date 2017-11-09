@@ -5,18 +5,10 @@
 <script>
 $(document).ready(function(){
     
- var b1 = $("#b1");
+ 
      var b2 = $("#b2");
-     var b3 = $("#btn3");
-
-    var btnClick = function(e){
-       alert("Button 1");
-    }
-
-    b1.on('click', btnClick);
-
     b2.click(function(){
-       alert("Button 2");
+       
         $(document).ready(function() {
                 $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=0b2631b0cb7583a50e0e76a90848723a1a676717&callback=?", function(data) {
                      var jsonPretty = JSON.stringify(data, null, '\t');
@@ -42,9 +34,6 @@ $(document).ready(function(){
 </head>
 <body>
 
-<p id="p1">This is a paragraph 1.</p>
-<p id="p2">This is a paragraph 2.</p>
-<button id="b1">Toggle between slide up and slide down for a p1 element</button>
 <button id="b2">Toggle between slide up and slide down for a p2 element</button>
  <span id="hello">hellos</span>    
     

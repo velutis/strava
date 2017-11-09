@@ -19,7 +19,7 @@ $(document).ready(function(){
        alert("Button 2");
         $(document).ready(function() {
                 $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=0b2631b0cb7583a50e0e76a90848723a1a676717&callback=?", function(data) {
-                     alert("getJSON");
+                     alert(data);
                     $('#hello').html(data);
                 });
             });

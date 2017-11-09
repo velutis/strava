@@ -5,20 +5,25 @@
 <script>
 $(document).ready(function(){
     
-    $("#b1").click(function(){
-        $("p1").slideToggle();
-    });
-    
-    $("#b2").click(function(){
-        $("p2").slideToggle();
-    });
+ var b1 = $("#b1");
+     var b2 = $("#b2");
+     var b3 = $("#btn3");
+
+    var btnClick = function(e){
+        alert("Button: "+e.currentTarget.id);
+    }
+
+    b1.on('click', btnClick);
+    b2.on('click', btnClick);
+
+
 });
 </script>
 </head>
 <body>
 
 <p id="p1">This is a paragraph 1.</p>
-<p id="p2">This is a paragraph 2.</p>
+<p id="p2">This is a paragraph 222222222.</p>
 <button id="b1">Toggle between slide up and slide down for a p1 element</button>
 <button id="b2">Toggle between slide up and slide down for a p2 element</button>
     

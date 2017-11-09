@@ -10,13 +10,13 @@ $(document).ready(function(){
      var b3 = $("#btn3");
 
     var btnClick = function(e){
-        $("p1").slideToggle();
+       alert("Button 1");
     }
 
     b1.on('click', btnClick);
 
     b2.click(function(){
-        $("p2").slideToggle();
+       alert("Button 2");
     });
 
 });
@@ -25,7 +25,7 @@ $(document).ready(function(){
 <body>
 
 <p id="p1">This is a paragraph 1.</p>
-<p id="p2">This is a paragraph 23.</p>
+<p id="p2">This is a paragraph 2.</p>
 <button id="b1">Toggle between slide up and slide down for a p1 element</button>
 <button id="b2">Toggle between slide up and slide down for a p2 element</button>
     

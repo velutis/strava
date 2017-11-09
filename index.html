@@ -4,17 +4,23 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-    $("button").click(function(){
-        $("p").slideToggle();
+    
+    $("#b1").click(function(){
+        $("p1").slideToggle();
+    });
+    
+    $("#b2").click(function(){
+        $("p2").slideToggle();
     });
 });
 </script>
 </head>
 <body>
 
-<p>This is a paragraph.</p>
-
-<button>Toggle between slide up and slide down for a p element</button>
-
+<p id="p1">This is a paragraph 1.</p>
+<p id="p2">This is a paragraph 2.</p>
+<button id="b1">Toggle between slide up and slide down for a p1 element</button>
+<button id="b2">Toggle between slide up and slide down for a p2 element</button>
+    
 </body>
 </html>

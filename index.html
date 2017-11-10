@@ -1,69 +1,105 @@
-
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Demo</title>
-        <meta charset="utf-8">
-        <!-- Styles -->
-        <link href="css\bootstrap.css" rel="stylesheet">
-        <link href="css\jquery.bootgrid.css" rel="stylesheet">
-        
-     
-        
-    </head>
-    <body>
-        
-        <button id="b2">Toggle between slide up and slide down for a p2 element</button>
-        <table id="grid" data-toggle="bootgrid" class="table table-condensed table-hover table-striped">
-            <thead>
-                <tr>
-                    <th data-column-id="id">ID</th>
-                    <th data-column-id="name">Sender</th>
-                </tr>
-            </thead>
-            <tbody>
-        <tr>
-            <td>10238</td>
-            <td>eduardo@pingpong.com</td>
-        </tr>
-    </tbody>
-        </table>
-                 <span id="hello">hellos</span>   
-        <!-- Scripts -->
-           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="js\jquery.bootgrid.js"></script> 
-        
-        <script>
+<head>
+<link href="css/bootstrap.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
 $(document).ready(function(){
 
-     var b2 = $("#b2");
-    b2.click(function(){
-       
-        $(document).ready(function() {
+
+             function getUserData(vUrl,callback) {
+    $.getJSON(vUrl,function(returndata){
+        callback(returndata);
+    });
+}
+
                 $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=0b2631b0cb7583a50e0e76a90848723a1a676717&callback=?", function(data) {
                      var jsonPretty = JSON.stringify(data, null, '\t');
-                    $('#hello').html(jsonPretty);
+                   
                     
                     var tbl_body = "";
     var odd_even = false;
     $.each(data, function() {
-        var tbl_row = "";
-        $.each(this, function(k , v) {
-            tbl_row += "<td>"+v+"</td>";
-        })
-        tbl_body += "<tr class=\""+( odd_even ? "odd" : "even")+"\">"+tbl_row+"</tr>";
-        odd_even = !odd_even;               
+     
+        var userJson = this;
+      //tbl_row += "<td>"+this.id+"</td>";
+      var rideDistance = 0; 
+      var rideDuration = 0;
+      var runDistance = 0;
+      var swimDistance = 0;
+      
+      //get activitis for member
+          $.getJSON("https://www.strava.com/api/v3/athletes/" + this.id + "/activities?access_token=0b2631b0cb7583a50e0e76a90848723a1a676717&after=1506643200&before=1510272000&per_page=200&callback=?", function(datamemberactivities) {
+                tbl_body += "<tr><td>"+userJson.firstname+"</td><td>"+userJson.lastname+"</td><td>"+"ok"+"</td></tr>";
+            
+             $.each(datamemberactivities, function() {
+               if (this.type == "Ride")
+                 {
+                   if (this.trainer == true)
+                     {
+                    tbl_body += "<tr><td></td><td></td><td>"+this.type+" (Indoor)</td><td>"+this.moving_time+"</td></tr>";   
+                       rideDuration += this.moving_time;
+                     }
+                   else
+                     {
+                     tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.distance+"</td></tr>";   
+                       rideDistance += this.distance;
+                     }
+                 }
+               else if (this.type == "Run")
+                 {
+                   tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.distance+"</td></tr>";   
+                   runDistance += this.distance;
+                 }
+               else if (this.type == "Swim")
+                 {
+                   tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.distance+"</td></tr>";   
+                   swimDistance += this.distance;
+                 }
+                
+             });
+            
+             tbl_body += "<tr><td></td><td></td><td>Total Ride</td><td>"+(rideDistance/1000).toFixed(2)+"</td></tr>";   
+            tbl_body += "<tr><td></td><td></td><td>Total Ride (Indoor)</td><td>"+(rideDuration/3600).toFixed(2)+"</td></tr>";   
+            tbl_body += "<tr><td></td><td></td><td>Total Run</td><td>"+(runDistance/1000).toFixed(2)+"</td></tr>";   
+            tbl_body += "<tr><td></td><td></td><td>Total Swim</td><td>"+(swimDistance/1000).toFixed(2)+"</td></tr>";   
+            
+             $("#myTable tbody").html(tbl_body);
+            })
+        .fail(function() 
+              {
+            tbl_body += "<tr><td>"+userJson.firstname+"</td><td>"+userJson.lastname+"</td><td>"+"Authorization required"+"</td></tr>";
+             $("#myTable tbody").html(tbl_body);
+              
+              });
+      
+       
+       
     })
-    $("#grid tbody").html(tbl_body);
+     
                 });
-            });
-    });
+
     
   
 
 });
 </script>
+</head>
+<body>
 
-    </body>
+<button id="b2">Toggle between slide up and slide down for a p2 element</button>
+ <span id="hello">hellos</span>    
+    
+    <table id="myTable" class="table table-condensed table-hover table-striped">
+  
+
+  <tbody>
+    <!-- rows will go here -->
+  </tbody>
+</table> 
+    
+   
+    
+</body>
 </html>
 

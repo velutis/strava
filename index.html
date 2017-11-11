@@ -8,7 +8,21 @@
 <script>
 $(document).ready(function(){
   
-
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+  
+  alert(getUrlVars()["code"]);
+  
        function getUserData(id, table) {
    $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=0b2631b0cb7583a50e0e76a90848723a1a676717&callback=?", function(data) {
                      var jsonPretty = JSON.stringify(data, null, '\t');

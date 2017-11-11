@@ -23,7 +23,7 @@ function getUrlVars()
   var code = getUrlVars()["code"];
   if (typeof code != 'undefined')
   {
-     $.post("https://www.strava.com/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "&callback=?", function(data) {
+     $.post("https://www.strava.com/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code, function(data) {
        window.location = "https://velutis.github.io/strava/";
      });
   }

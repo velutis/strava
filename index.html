@@ -93,11 +93,11 @@ const options = {
 
       remoteRepo = gh.getRepo('velutis', 'strava'); 
  alert(remoteRepo);
-         alert(data.token);
-         $.getJSON("https://www.strava.com/api/v3/athlete?access_token=" + data.token + "&callback=?", function(dataAthlete) {
+         alert(data.access_token);
+         $.getJSON("https://www.strava.com/api/v3/athlete?access_token=" + data.access_token + "&callback=?", function(dataAthlete) {
    
       alert(dataAthlete);
-  remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id, data.token, "message", options, function(error, commit) {
+  remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id, data.access_token, "message", options, function(error, commit) {
 
             }); 
          }); 

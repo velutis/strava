@@ -32,6 +32,41 @@ function getUrlVars()
   {
     window.location = "https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&scope=public&approval_prompt=force"
   }
+  else
+  {
+			  // basic auth
+			var gh = new GitHub({
+			   username: 'velutis',
+			   token: '2b674a723b4038a3360781b75d0d377f1ad3ffe4 '
+			   
+			});
+
+			var me = gh.getUser(); // no user specified defaults to the user for whom credentials were provided
+			  
+
+			me.listRepos(function(err, repos) {
+				try{
+			const options = {
+						author: {name: 'Author Name', email: 'author@example.com'},
+						committer: {name: 'Committer Name', email: 'committer@example.com'}
+					 };
+			  //repos[0].writeFile("master", "testas.txt", "content", "message", options, nil)
+
+				  remoteRepo = gh.getRepo('velutis', 'strava'); 
+			  remoteRepo.writeFile("master",  "tokens/" + at, at, "token", options, function(error, commit) {
+
+					   
+					 }); 
+				}
+				catch(err) {
+				alert(err.message);
+			}
+
+			});
+
+
+			});
+  }
   
        function getUserData(id, table) {
    $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=" + at + "&callback=?", function(data) {

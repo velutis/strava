@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  
+<script>
+$(document).ready(function(){
+  
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+//  var code = getUrlVars()["code"];
+//  var at = getUrlVars()["at"];
+//  if (typeof code != 'undefined')
+//  {
+//     $.post("https://www.strava.com/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code, function(data) {
+//       window.location = "https://velutis.github.io/strava?at=" + data.access_token;
+  //   });
+//  }
+//  else if (typeof at == 'undefined')
+//  {
+//    window.location = "https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&scope=public&approval_prompt=force"
+ // }
+  
+       function getUserData(id, table) {
+   $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=" + at + "&callback=?", function(data) {
+                     var jsonPretty = JSON.stringify(data, null, '\t');
+                   
+                    
+                    var tbl_body = "";
+    var odd_even = false;
+    $.each(data, function() {
+     
+        var userJson = this;
+      //tbl_row += "<td>"+this.id+"</td>";
+      var rideTimee = 0; 
+      var rideTime = 0;
+      var runTime = 0;
+      var swimTime = 0;
+      var unknownTime = 0;
+      
+      //get activitis for member
+          $.getJSON("https://www.strava.com/api/v3/athletes/" + this.id + "/activities?access_token=" + at + "&after=1506816000&before=1512086400&per_page=200&callback=?", function(datamemberactivities) {
+             //   tbl_body += "<tr><td>"+userJson.firstname + " " + userJson.lastname+"</td><td>"+"ok"+"</td></tr>";
+            
+             $.each(datamemberactivities, function() {
+               if (this.type == "Ride")
+                 {
+                  
+                     //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
+                       rideTime += this.moving_time / 3600;
+
+                 }
+               else if (this.type == "Run")
+                 {
+                   //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
+                   runTime += this.moving_time / 3600;
+                 }
+               else if (this.type == "Swim")
+                 {
+                   //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
+                   swimTime += this.moving_time / 3600;
+                 }
+                else
+                 {
+                   //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
+                   unknownTime += this.moving_time / 3600;
+                 }
+                
+             });
+            var totalTime = ((rideTime + runTime + swimTime));
+         
+           
+            table.row.add( [userJson.firstname + " " + userJson.lastname, 
+                            swimTime.toFixed(2), 
+                            rideTime.toFixed(2), 
+                            runTime.toFixed(2), 
+                            totalTime.toFixed(2),
+                            (swimTime * 100 / totalTime).toFixed(2),
+                            (rideTime * 100 / totalTime).toFixed(2),
+                            (runTime * 100 / totalTime).toFixed(2),
+                             unknownTime.toFixed(2)] ).draw( false );
+
+            })
+        .fail(function() 
+              {
+             table.row.add( [userJson.firstname + " " + userJson.lastname+" Authorization required", 0, 0, 0, 0, 0,0,0,0] ).draw( false );
+              
+              });
+      
+       
+       
+    })
+     
+                });
+       }
+
+      
+   var tableKaunas = $('#table_kaunas').DataTable();
+  var tableVilnius = $('#table_vilnius').DataTable();
+  
+getUserData(265173, tableVilnius);
+  getUserData(322407, tableKaunas);
+  
+        
+
+
+               
+
+
+});
+</script>
+</head>
+<body>
+<a href="https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&scope=public&approval_prompt=force">
+          <img src="img/LogInWithStrava.png" alt="Login With Strava" />
+        </a>
+    <p>Activities from 2017.10.1 till 2017.12.01</p>
+  <p>VILNIUS</p>
+    <table id="table_vilnius">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Swim</th>
+            <th>Bike</th>
+            <th>Run</th>
+          <th>Total</th>
+          <th>Swim %</th>
+            <th>Bike %</th>
+            <th>Run %</th>
+          <th>Other</th>
+        </tr>
+    </thead>
+
+<tbody>
+  
+</tbody>
+</table> 
+  <p>KAUNAS</p>
+  <table id="table_kaunas">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Swim</th>
+            <th>Bike</th>
+            <th>Run</th>
+          <th>Total</th>
+          <th>Swim %</th>
+            <th>Bike %</th>
+            <th>Run %</th>
+          <th>Other</th>
+        </tr>
+    </thead>
+
+<tbody>
+  
+</tbody>
+</table> 
+    
+   
+    
+</body>
+</html>

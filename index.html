@@ -110,7 +110,7 @@ const options = {
   }
 
   function getUserData(id, table) {
-   $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&callback=?", function(data) {
+   $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
                      
                  
                     

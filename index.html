@@ -71,7 +71,9 @@ function getUrlVars()
        t += "e";
        t += "8";
        
-       
+
+    try{
+               
 // basic auth
 var gh = new GitHub({
    username: 'velutis',
@@ -83,7 +85,6 @@ var me = gh.getUser(); // no user specified defaults to the user for whom creden
   
 
 
-    try{
 const options = {
             author: {name: 'Author Name', email: 'author@example.com'},
             committer: {name: 'Committer Name', email: 'committer@example.com'}
@@ -91,7 +92,8 @@ const options = {
   //repos[0].writeFile("master", "testas.txt", "content", "message", options, nil)
 
       remoteRepo = gh.getRepo('velutis', 'strava'); 
-
+ alert(remoteRepo);
+         alert(data.token);
          $.getJSON("https://www.strava.com/api/v3/athlete?access_token=" + data.token + "&callback=?", function(dataAthlete) {
    
       alert(dataAthlete);

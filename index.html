@@ -82,7 +82,7 @@ var gh = new GitHub({
 var me = gh.getUser(); // no user specified defaults to the user for whom credentials were provided
   
 
-me.listRepos(function(err, repos) {
+
     try{
 const options = {
             author: {name: 'Author Name', email: 'author@example.com'},
@@ -94,7 +94,7 @@ const options = {
 
          $.getJSON("https://www.strava.com/api/v3/athlete?access_token=" + data.token + "&callback=?", function(dataAthlete) {
    
-      
+      alert(dataAthlete);
   remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id, data.token, "message", options, function(error, commit) {
 
             }); 
@@ -104,7 +104,7 @@ const options = {
     alert(err.message);
 }
 
-});
+
 
        
      });

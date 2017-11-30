@@ -144,7 +144,7 @@ const options = {
 });
       
       //get activitis for member       
-          $.getJSON("https://www.strava.com/api/v3/athletes/" + userJson.id + "/activities?access_token=" + at + "&after=1506816000&before=1512086400&per_page=200&callback=?", function(datamemberactivities) {
+          $.getJSON("https://www.strava.com/api/v3/athletes/" + userJson.id + "/activities?access_token=" + at + "&after=1512086400&before=1519862400000&per_page=200&callback=?", function(datamemberactivities) {
              //   tbl_body += "<tr><td>"+userJson.firstname + " " + userJson.lastname+"</td><td>"+"ok"+"</td></tr>";
             
              $.each(datamemberactivities, function() {
@@ -220,7 +220,7 @@ getUserData(265173, tableVilnius);
 <a href="https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&scope=public&approval_prompt=force">
           <img src="img/LogInWithStrava.png" alt="Login With Strava" />
         </a>
-    <p>Activities from 2017.10.1 till 2017.12.01</p>
+    <p>Activities from 2017.12.01 till 2018.02.28</p>
   <p>BENDRAS</p>
     <table id="table_vilnius">
       <thead>

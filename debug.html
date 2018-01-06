@@ -176,13 +176,13 @@ const options = {
                             (swimTime * 100 / totalTime).toFixed(2),
                             (rideTime * 100 / totalTime).toFixed(2),
                             (runTime * 100 / totalTime).toFixed(2),
-                             unknownTime.toFixed(2)],
+                             unknownTime.toFixed(2),
                              unknownTypes.join(" * "),
-                             acCount).draw( false );
+                             acCount]).draw( false );
             })
         .fail(function() 
               {
-             table.row.add( [userJson.firstname + " " + userJson.lastname+" Authorization required", 0, 0, 0, 0, 0,0,0,0,0,0] ).draw( false );
+             table.row.add( [userJson.firstname + " " + userJson.lastname+" Authorization required", 0, 0, 0, 0, 0,0,0,0,"",0] ).draw( false );
               
               });
       

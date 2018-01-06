@@ -148,14 +148,14 @@ const options = {
              //   tbl_body += "<tr><td>"+userJson.firstname + " " + userJson.lastname+"</td><td>"+"ok"+"</td></tr>";
             
              $.each(datamemberactivities, function() {
-               if (this.type == "Ride")
+               if (this.type == "Ride" || this.type == "VirtualRide")
                  {
                   
                      //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
                        rideTime += this.moving_time / 3600;
 
                  }
-               else if (this.type == "Run")
+               else if (this.type == "Run" || this.type == "NordicSki")
                  {
                    //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
                    runTime += this.moving_time / 3600;

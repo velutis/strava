@@ -140,7 +140,7 @@ const options = {
             
              $.each(datamemberactivities, function() {
                  acCount = acCount + 1;
-               if (this.type == "Ride")
+               if (this.type == "Ride" || this.type == "VirtualRide")
                  {
                   
                      //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   

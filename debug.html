@@ -202,9 +202,12 @@ const options = {
                      
                  
     $.each(data, function() {
+	kaunasIDS.push(this.id);  
 	}
+	
+	getUserData(265173, kaunasIDS);
 	}
-getUserData(265173, kaunasIDS);
+
  // getUserData(322407, tableKaunas);
   
   

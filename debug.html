@@ -99,17 +99,13 @@ const options = {
        
      });
   }
-  function getUserData(id) {
+  function getUserData(id, kaunasIDS) {
    $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
                      
                  
-                    
-                    var tbl_body = "";
-    var odd_even = false;
     $.each(data, function() {
      
-        var userJson = this;
-      //tbl_row += "<td>"+this.id+"</td>";
+        var userJson = this;      
       var rideTimee = 0; 
       var rideTime = 0;
       var runTime = 0;
@@ -136,29 +132,24 @@ const options = {
       
       //get activitis for member       
           $.getJSON("https://www.strava.com/api/v3/athletes/" + userJson.id + "/activities?access_token=" + at + "&after=1512086400&before=1519862399&per_page=200&callback=?", function(datamemberactivities) {
-             //   tbl_body += "<tr><td>"+userJson.firstname + " " + userJson.lastname+"</td><td>"+"ok"+"</td></tr>";
+            
             
              $.each(datamemberactivities, function() {
                  acCount = acCount + 1;
                if (this.type == "Ride" || this.type == "VirtualRide")
                  {
-                  
-                     //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
                        rideTime += this.moving_time / 3600;
                  }
                else if (this.type == "Run" || this.type == "NordicSki")
                  {
-                   //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
                    runTime += this.moving_time / 3600;
                  }
                else if (this.type == "Swim")
                  {
-                   //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
                    swimTime += this.moving_time / 3600;
                  }
                 else
                  {
-                   //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
                    unknownTime += this.moving_time / 3600;
                    if (unknownTypes.indexOf(this.type) == -1)
                     unknownTypes.push(this.type);   
@@ -182,11 +173,16 @@ const options = {
            if (userJson.sex == "F")
 		   tableMerginos.row.add( row ).draw( false );
             
-			tableVilnius.row.add( row ).draw( false );
+			if (kaunasIDS.indexOf(userJson.id) == -1)
+				tableVilnius.row.add( row ).draw( false );
+			else
+				tableKaunas.row.add( row ).draw( false );
+			
+			tableBendras.row.add( row ).draw( false );
             })
         .fail(function() 
               {
-             tableVilnius.row.add( [userJson.firstname + " " + userJson.lastname+" Authorization required", 0, 0, 0, 0, 0,0,0,0,"",0] ).draw( false );
+             tableBendras.row.add( [userJson.firstname + " " + userJson.lastname+" Authorization required", 0, 0, 0, 0, 0,0,0,0,"",0] ).draw( false );
               
               });
       
@@ -196,12 +192,19 @@ const options = {
      
                 });
        }
-      
-   var tableKaunas = $('#table_kaunas').DataTable();
-  var tableVilnius = $('#table_vilnius').DataTable();
-  var tableMerginos = $('#table_merginos').DataTable();
+   var tableBendras = $('#tableBendras').DataTable();   
+   var tableKaunas = $('#tableKaunas').DataTable();
+  var tableVilnius = $('#tableVilnius').DataTable();
+  var tableMerginos = $('#tableMerginos').DataTable();
   
-getUserData(265173);
+  var kaunasIDS = [];
+     $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
+                     
+                 
+    $.each(data, function() {
+	}
+	}
+getUserData(265173, kaunasIDS);
  // getUserData(322407, tableKaunas);
   
   
@@ -216,7 +219,7 @@ getUserData(265173);
         </a>
     <p>Activities from 2017.12.01 till 2018.02.28</p>
   <p>BENDRAS</p>
-    <table id="table_vilnius">
+    <table id="tableBendras">
       <thead>
         <tr>
             <th>Name</th>
@@ -238,7 +241,7 @@ getUserData(265173);
 </tbody>
         </table> 
   <p>MERGINOS</p>
-  <table id="table_merginos">
+  <table id="tableMerginos">
       <thead>
         <tr>
             <th>Name</th>
@@ -259,8 +262,32 @@ getUserData(265173);
   
 </tbody>
 </table> 
+
+  <p>VILNIUS</p>
+    <table id="tableVilnius">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Swim</th>
+            <th>Bike</th>
+            <th>Run</th>
+          <th>Total</th>
+          <th>Swim %</th>
+            <th>Bike %</th>
+            <th>Run %</th>
+          <th>Other</th>
+            <th>Other typo</th>
+            <th>acc</th>
+        </tr>
+    </thead>
+
+<tbody>
+  
+</tbody>
+        </table> 
+		
   <p>KAUNAS</p>
-  <table id="table_kaunas">
+  <table id="tableKaunas">
       <thead>
         <tr>
             <th>Name</th>

@@ -99,6 +99,19 @@ const options = {
        
      });
   }
+   function load() {
+     
+  var kaunasIDS = [];
+     $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
+                     
+                 
+    $.each(data, function() {
+	kaunasIDS.push(this.id);  
+	}
+	
+	getUserData(265173, kaunasIDS);
+	}
+   }
   function getUserData(id, kaunasIDS) {
    $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
                      
@@ -196,17 +209,8 @@ const options = {
    var tableKaunas = $('#tableKaunas').DataTable();
   var tableVilnius = $('#tableVilnius').DataTable();
   var tableMerginos = $('#tableMerginos').DataTable();
-  
-  var kaunasIDS = [];
 
-     $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
-                     
-                 
-
-	
-	getUserData(265173, kaunasIDS);
-	}
-	
+  load();
 
  // getUserData(322407, tableKaunas);
   

@@ -209,9 +209,12 @@ const options = {
    var tableKaunas = $('#tableKaunas').DataTable();
   var tableVilnius = $('#tableVilnius').DataTable();
   var tableMerginos = $('#tableMerginos').DataTable();
-
+try{
   load();
-
+   }
+catch(err) {
+    alert(err.message);
+}
  // getUserData(322407, tableKaunas);
   
   

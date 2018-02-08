@@ -99,7 +99,7 @@ const options = {
        
      });
   }
-   function load() {
+   function loadt() {
      alert("0");
   var kaunasIDS = [];
      $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
@@ -209,8 +209,8 @@ const options = {
    var tableKaunas = $('#tableKaunas').DataTable();
   var tableVilnius = $('#tableVilnius').DataTable();
   var tableMerginos = $('#tableMerginos').DataTable();
-
-  load();
+alert("bl");
+  loadt();
 
  // getUserData(322407, tableKaunas);
   
@@ -224,7 +224,7 @@ const options = {
 <a href="https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&scope=public&approval_prompt=force">
           <img src="img/LogInWithStrava.png" alt="Login With Strava" />
         </a>
-    <p>Activities from 2017.12.01 till 2018.02.28 (v 0.0.3)</p>
+    <p>Activities from 2017.12.01 till 2018.02.28 (v 0.0.4)</p>
   <p>BENDRAS</p>
     <table id="tableBendras">
       <thead>

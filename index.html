@@ -71,7 +71,6 @@ function getUrlVars()
        t += "e";
        t += "8";
        
-
     try{
                
 // basic auth
@@ -80,52 +79,53 @@ var gh = new GitHub({
    token: t
    
 });
-
 var me = gh.getUser(); // no user specified defaults to the user for whom credentials were provided
   
-
-
 const options = {
             author: {name: 'Author Name', email: 'author@example.com'},
             committer: {name: 'Committer Name', email: 'committer@example.com'}
          };
   //repos[0].writeFile("master", "testas.txt", "content", "message", options, nil)
-
       remoteRepo = gh.getRepo('velutis', 'strava'); 
          $.getJSON("https://www.strava.com/api/v3/athlete?access_token=" + data.access_token + "&callback=?", function(dataAthlete) {
    
   remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id + ".tok", data.access_token, "message", options, function(error, commit) {
-
             }); 
          }); 
     }
     catch(err) {
  
 }
-
-
-
        
      });
   }
+   function loadt() {
 
-  function getUserData(id, table) {
+  var kaunasIDS = [];
+     $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
+                  
+                 
+    $.each(data, function() {
+	kaunasIDS.push(this.id);  
+	})
+	
+	getUserData(265173, kaunasIDS);
+	});
+   }
+  function getUserData(id, kaunasIDS) {
    $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
                      
                  
-                    
-                    var tbl_body = "";
-    var odd_even = false;
     $.each(data, function() {
      
-        var userJson = this;
-      //tbl_row += "<td>"+this.id+"</td>";
+        var userJson = this;      
       var rideTimee = 0; 
       var rideTime = 0;
       var runTime = 0;
       var swimTime = 0;
       var unknownTime = 0;
-      
+      var acCount = 0;
+      var unknownTypes = [];
       var at = "";
       
        jQuery.ajax({
@@ -145,37 +145,33 @@ const options = {
       
       //get activitis for member       
           $.getJSON("https://www.strava.com/api/v3/athletes/" + userJson.id + "/activities?access_token=" + at + "&after=1512086400&before=1519862399&per_page=200&callback=?", function(datamemberactivities) {
-             //   tbl_body += "<tr><td>"+userJson.firstname + " " + userJson.lastname+"</td><td>"+"ok"+"</td></tr>";
+            
             
              $.each(datamemberactivities, function() {
+                 acCount = acCount + 1;
                if (this.type == "Ride" || this.type == "VirtualRide")
                  {
-                  
-                     //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
                        rideTime += this.moving_time / 3600;
-
                  }
                else if (this.type == "Run" || this.type == "NordicSki")
                  {
-                   //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
                    runTime += this.moving_time / 3600;
                  }
                else if (this.type == "Swim")
                  {
-                   //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
                    swimTime += this.moving_time / 3600;
                  }
                 else
                  {
-                   //tbl_body += "<tr><td></td><td></td><td>"+this.type+"</td><td>"+this.moving_time+"</td></tr>";   
                    unknownTime += this.moving_time / 3600;
+                   if (unknownTypes.indexOf(this.type) == -1)
+                    unknownTypes.push(this.type);   
                  }
                 
              });
             var totalTime = ((rideTime + runTime + swimTime));
          
-           
-            table.row.add( [userJson.firstname + " " + userJson.lastname, 
+		 var row = [userJson.firstname + " " + userJson.lastname, 
                             swimTime.toFixed(2), 
                             rideTime.toFixed(2), 
                             runTime.toFixed(2), 
@@ -183,13 +179,23 @@ const options = {
                             (swimTime * 100 / totalTime).toFixed(2),
                             (rideTime * 100 / totalTime).toFixed(2),
                             (runTime * 100 / totalTime).toFixed(2),
-                             unknownTime.toFixed(2)] ).draw( false );
-
+                             unknownTime.toFixed(2),
+                             unknownTypes.join(" * "),
+                             acCount];
+		 
+           if (userJson.sex == "F")
+		   tableMerginos.row.add( row ).draw( false );
+            
+			if (kaunasIDS.indexOf(userJson.id) == -1)
+				tableVilnius.row.add( row ).draw( false );
+			else
+				tableKaunas.row.add( row ).draw( false );
+			
+			tableBendras.row.add( row ).draw( false );
             })
         .fail(function() 
               {
-
-             table.row.add( [userJson.firstname + " " + userJson.lastname+" Authorization required", 0, 0, 0, 0, 0,0,0,0] ).draw( false );
+             tableBendras.row.add( [userJson.firstname + " " + userJson.lastname+" Authorization required", 0, 0, 0, 0, 0,0,0,0,"",0] ).draw( false );
               
               });
       
@@ -199,20 +205,18 @@ const options = {
      
                 });
        }
+   var tableBendras = $('#tableBendras').DataTable();   
+   var tableKaunas = $('#tableKaunas').DataTable();
+  var tableVilnius = $('#tableVilnius').DataTable();
+  var tableMerginos = $('#tableMerginos').DataTable();
 
-      
-   var tableKaunas = $('#table_kaunas').DataTable();
-  var tableVilnius = $('#table_vilnius').DataTable();
+  loadt();
+
+ // getUserData(322407, tableKaunas);
   
-getUserData(265173, tableVilnius);
-  getUserData(322407, tableKaunas);
   
         
-
-
                
-
-
 });
 </script>
 </head>
@@ -220,9 +224,9 @@ getUserData(265173, tableVilnius);
 <a href="https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&scope=public&approval_prompt=force">
           <img src="img/LogInWithStrava.png" alt="Login With Strava" />
         </a>
-    <p>Activities from 2017.12.01 till 2018.02.28</p>
+    <p>Activities from 2017.12.01 till 2018.02.28 (v 0.0.5)</p>
   <p>BENDRAS</p>
-    <table id="table_vilnius">
+    <table id="tableBendras">
       <thead>
         <tr>
             <th>Name</th>
@@ -234,6 +238,30 @@ getUserData(265173, tableVilnius);
             <th>Bike %</th>
             <th>Run %</th>
           <th>Other</th>
+<th>Other types</th>
+            <th>Activities count</th>
+        </tr>
+    </thead>
+
+<tbody>
+  
+</tbody>
+        </table> 
+  <p>MERGINOS</p>
+  <table id="tableMerginos">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Swim</th>
+            <th>Bike</th>
+            <th>Run</th>
+          <th>Total</th>
+          <th>Swim %</th>
+            <th>Bike %</th>
+            <th>Run %</th>
+          <th>Other</th>
+<th>Other types</th>
+            <th>Activities count</th>
         </tr>
     </thead>
 
@@ -241,8 +269,9 @@ getUserData(265173, tableVilnius);
   
 </tbody>
 </table> 
-  <p>KAUNAS</p>
-  <table id="table_kaunas">
+
+  <p>VILNIUS</p>
+    <table id="tableVilnius">
       <thead>
         <tr>
             <th>Name</th>
@@ -254,6 +283,31 @@ getUserData(265173, tableVilnius);
             <th>Bike %</th>
             <th>Run %</th>
           <th>Other</th>
+            <th>Other types</th>
+            <th>Activities count</th>
+        </tr>
+    </thead>
+
+<tbody>
+  
+</tbody>
+        </table> 
+		
+  <p>KAUNAS</p>
+  <table id="tableKaunas">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Swim</th>
+            <th>Bike</th>
+            <th>Run</th>
+          <th>Total</th>
+          <th>Swim %</th>
+            <th>Bike %</th>
+            <th>Run %</th>
+          <th>Other</th>
+<th>Other types</th>
+            <th>Activities count</th>
         </tr>
     </thead>
 

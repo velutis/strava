@@ -66,9 +66,7 @@ function getUrlVars()
 	   t += "e";
        
      
-       
-    try{
-         
+
 // basic auth
 var gh = new GitHub({
    username: 'velutis',
@@ -112,13 +110,7 @@ const options = {
   console.log(error);
             }); 
          });  
-    }
-    catch(err) {
-	
- 
-}
-       
-     });
+    });
   }
    function loadt() {
 
@@ -132,6 +124,7 @@ const options = {
 	
 	getUserData(265173, kaunasIDS);
 	});
+   }
    }
   function getUserData(id, kaunasIDS) {
    $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=7d8ae8fff28a01d87beba038a5a5e76a32e33ee9&per_page=200&callback=?", function(data) {

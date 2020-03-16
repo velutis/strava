@@ -128,7 +128,7 @@ const options = {
         url: "https://velutis.github.io/strava/tokens/" + id ,
         success: function (result) {
            
-              at = result;
+              at = JSON.parse(result);
         }, 
         async: false
     });

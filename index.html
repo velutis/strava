@@ -28,7 +28,7 @@ function getUrlVars()
   if (typeof code != 'undefined')
   {
 console.log(code);
-     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "grant_type=authorization_code", function(data) {
+     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "&grant_type=authorization_code", function(data) {
        //store token
        
        var t = "8";

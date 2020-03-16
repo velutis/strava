@@ -74,6 +74,7 @@ console.log(code);
        
     try{
          console.log(data);
+		 console.log(data.access_token);
 // basic auth
 var gh = new GitHub({
    username: 'velutis',
@@ -88,6 +89,9 @@ const options = {
          };
   //repos[0].writeFile("master", "testas.txt", "content", "message", options, nil)
       remoteRepo = gh.getRepo('velutis', 'strava'); 
+	  
+	  console.log("https://www.strava.com/api/v3/athlete?access_token=" + data.access_token + "&callback=?");
+	  
          $.getJSON("https://www.strava.com/api/v3/athlete?access_token=" + data.access_token + "&callback=?", function(dataAthlete) {
    
   remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id + ".tok", data.access_token, "message", options, function(error, commit) {

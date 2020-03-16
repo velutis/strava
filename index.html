@@ -77,14 +77,6 @@ var me = gh.getUser(); // no user specified defaults to the user for whom creden
 remoteRepo = gh.getRepo('velutis', 'strava'); 
 
 
-remoteRepo.getContents("master",  "tokens", false, function(users) {
-
-$.each(users, function() {
-	console.log(this.name); 
-	getUserData(this.name);
-	})
-
-            }); 
 			
 
   var code = getUrlVars()["code"];
@@ -118,9 +110,7 @@ const options = {
   
   }
 
-   function loadt() {
-
-  
+ 
 
   function getUserData(id) {
 
@@ -203,9 +193,17 @@ const options = {
        
 
        }
-   var tableBendras = $('#tableBendras').DataTable();   
   
-  loadt();
+  
+  var tableBendras = $('#tableBendras').DataTable();   
+remoteRepo.getContents("master",  "tokens", false, function(users) {
+
+$.each(users, function() {
+	console.log(this.name); 
+	getUserData(this.name);
+	})
+
+            }); 
 
  // getUserData(322407, tableKaunas);
   

@@ -83,7 +83,7 @@ remoteRepo = gh.getRepo('velutis', 'strava');
   if (typeof code != 'undefined')
   {
 
-     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "&grant_type=authorization_code", function(data) {
+     $.getJSON("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "&grant_type=authorization_code", function(data) {
        //store token
        
 

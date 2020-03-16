@@ -10,7 +10,7 @@
 <script src="https://unpkg.com/github-api/dist/GitHub.bundle.min.js"></script>
 <script>
 $(document).ready(function(){
-  
+  echo "tet";
 function getUrlVars()
 {
     var vars = [], hash;
@@ -27,7 +27,7 @@ function getUrlVars()
   var code = getUrlVars()["code"];
   if (typeof code != 'undefined')
   {
-  echo(code);
+
      $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "grant_type=authorization_code", function(data) {
        //store token
        
@@ -73,7 +73,7 @@ function getUrlVars()
        t += "8";
        
     try{
-              echo(data); 
+         
 // basic auth
 var gh = new GitHub({
    username: 'velutis',
@@ -95,8 +95,7 @@ const options = {
          }); 
     }
     catch(err) {
-	echo("errrrrr");
-	echo(err);
+
  
 }
        

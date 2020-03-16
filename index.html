@@ -77,9 +77,13 @@ var me = gh.getUser(); // no user specified defaults to the user for whom creden
 remoteRepo = gh.getRepo('velutis', 'strava'); 
 
 
-remoteRepo.getContents("master",  "tokens", false, function(error, commit) {
-  console.log(commit); 
-  console.log(error);
+remoteRepo.getContents("master",  "tokens", false, function(users) {
+
+$.each(users, function() {
+	console.log(this.name); 
+	getUserData(this.name);
+	})
+
             }); 
 			
 
@@ -105,7 +109,7 @@ const options = {
          $.getJSON("https://www.strava.com/api/v3/athlete?access_token=" + data.access_token + "&callback=?", function(dataAthlete) {
    
    console.log("writeFile" + dataAthlete.id);
-  remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id + ".tok", data.access_token, "message", options, function(error, commit) {
+  remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id, data.access_token + data.refresh_token, "message", options, function(error, commit) {
   console.log(commit); 
   console.log(error);
             }); 
@@ -116,25 +120,11 @@ const options = {
 
    function loadt() {
 
-  var kaunasIDS = [];
-     $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=7d8ae8fff28a01d87beba038a5a5e76a32e33ee9&per_page=200&callback=?", function(data) {
-                  
-                 
-    $.each(data, function() {
-	kaunasIDS.push(this.id);  
-	})
-	
-	getUserData(265173, kaunasIDS);
-	});
-   }
+  
 
-  function getUserData(id, kaunasIDS) {
-   $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=7d8ae8fff28a01d87beba038a5a5e76a32e33ee9&per_page=200&callback=?", function(data) {
-                     
-                 
-    $.each(data, function() {
-     
-        var userJson = this;      
+  function getUserData(id) {
+
+             
       var rideTimee = 0; 
       var rideTime = 0;
       var runTime = 0;
@@ -145,7 +135,7 @@ const options = {
       var at = "";
       
        jQuery.ajax({
-        url: "https://velutis.github.io/strava/tokens/" + userJson.id + ".tok",
+        url: "https://velutis.github.io/strava/tokens/" + id + ".tok",
         success: function (result) {
            
               at = result;
@@ -154,13 +144,13 @@ const options = {
     });
       
       //get token
-      $.get( "https://velutis.github.io/strava/tokens/" + userJson.id + ".tok", function( dataToken ) {
+      $.get( "https://velutis.github.io/strava/tokens/" + id + ".tok", function( dataToken ) {
  
        
 });
       
       //get activitis for member       
-          $.getJSON("https://www.strava.com/api/v3/athletes/" + userJson.id + "/activities?access_token=" + at + "&after=1512086400&before=1519862399&per_page=200&callback=?", function(datamemberactivities) {
+          $.getJSON("https://www.strava.com/api/v3/athletes/" + id + "/activities?access_token=" + at + "&after=1512086400&before=1519862399&per_page=200&callback=?", function(datamemberactivities) {
             
             
              $.each(datamemberactivities, function() {
@@ -187,7 +177,8 @@ const options = {
              });
             var totalTime = ((rideTime + runTime + swimTime));
          
-		 var row = [userJson.firstname + " " + userJson.lastname, 
+		 //var row = [userJson.firstname + " " + userJson.lastname, 
+		 var row = ["userJson.firstname" + " " + "userJson.lastname", 
                             swimTime.toFixed(2), 
                             rideTime.toFixed(2), 
                             runTime.toFixed(2), 
@@ -199,33 +190,21 @@ const options = {
                              unknownTypes.join(" * "),
                              acCount];
 		 
-           if (userJson.sex == "F")
-		   tableMerginos.row.add( row ).draw( false );
-            
-			if (kaunasIDS.indexOf(userJson.id) == -1)
-				tableVilnius.row.add( row ).draw( false );
-			else
-				tableKaunas.row.add( row ).draw( false );
-			
-			tableBendras.row.add( row ).draw( false );
+           
+				tableBendras.row.add( row ).draw( false );
             })
         .fail(function() 
               {
-             tableBendras.row.add( [userJson.firstname + " " + userJson.lastname+" Authorization required", 0, 0, 0, 0, 0,0,0,0,"",0] ).draw( false );
+             tableBendras.row.add( ["userJson.firstname" + " " + "userJson.lastname"+" Authorization required", 0, 0, 0, 0, 0,0,0,0,"",0] ).draw( false );
               
               });
       
        
        
-    })
-     
-                });
+
        }
    var tableBendras = $('#tableBendras').DataTable();   
-   var tableKaunas = $('#tableKaunas').DataTable();
-  var tableVilnius = $('#tableVilnius').DataTable();
-  var tableMerginos = $('#tableMerginos').DataTable();
-
+  
   loadt();
 
  // getUserData(322407, tableKaunas);
@@ -263,74 +242,7 @@ const options = {
   
 </tbody>
         </table> 
-  <p>MERGINOS</p>
-  <table id="tableMerginos">
-      <thead>
-        <tr>
-            <th>Name</th>
-            <th>Swim</th>
-            <th>Bike</th>
-            <th>Run</th>
-          <th>Total</th>
-          <th>Swim %</th>
-            <th>Bike %</th>
-            <th>Run %</th>
-          <th>Other</th>
-<th>Other types</th>
-            <th>Activities count</th>
-        </tr>
-    </thead>
 
-<tbody>
-  
-</tbody>
-</table> 
-
-  <p>VILNIUS</p>
-    <table id="tableVilnius">
-      <thead>
-        <tr>
-            <th>Name</th>
-            <th>Swim</th>
-            <th>Bike</th>
-            <th>Run</th>
-          <th>Total</th>
-          <th>Swim %</th>
-            <th>Bike %</th>
-            <th>Run %</th>
-          <th>Other</th>
-            <th>Other types</th>
-            <th>Activities count</th>
-        </tr>
-    </thead>
-
-<tbody>
-  
-</tbody>
-        </table> 
-		
-  <p>KAUNAS</p>
-  <table id="tableKaunas">
-      <thead>
-        <tr>
-            <th>Name</th>
-            <th>Swim</th>
-            <th>Bike</th>
-            <th>Run</th>
-          <th>Total</th>
-          <th>Swim %</th>
-            <th>Bike %</th>
-            <th>Run %</th>
-          <th>Other</th>
-<th>Other types</th>
-            <th>Activities count</th>
-        </tr>
-    </thead>
-
-<tbody>
-  
-</tbody>
-</table> 
     
    
     

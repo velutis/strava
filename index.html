@@ -27,8 +27,8 @@ function getUrlVars()
   var code = getUrlVars()["code"];
   if (typeof code != 'undefined')
   {
-  
-     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code, function(data) {
+  echo(code);
+     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "grant_type=authorization_code", function(data) {
        //store token
        
        var t = "8";
@@ -73,7 +73,7 @@ function getUrlVars()
        t += "8";
        
     try{
-               
+              echo(data); 
 // basic auth
 var gh = new GitHub({
    username: 'velutis',
@@ -224,10 +224,10 @@ const options = {
 </script>
 </head>
 <body>
-<a href="https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&approval_prompt=force">
+<a href="https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&approval_prompt=force&scope=read">
           <img src="img/LogInWithStrava.png" alt="Login With Strava" />
         </a>
-    <p>Activities from 2017.12.01 till 2018.02.28 (v 0.0.9)</p>
+    <p>Activities from 2017.12.01 till 2018.02.28 (v 0.1.0)</p>
   <p>BENDRAS</p>
     <table id="tableBendras">
       <thead>

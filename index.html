@@ -196,7 +196,7 @@ const options = {
   
   
   var tableBendras = $('#tableBendras').DataTable();   
-remoteRepo.getContents("master",  "tokens", false, function(users) {
+remoteRepo.getContents("master",  "tokens", false, function(users, err) {
 console.log(users); 
 $.each(users, function() {
 	console.log(this.name); 

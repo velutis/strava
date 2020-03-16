@@ -27,7 +27,8 @@ function getUrlVars()
   var code = getUrlVars()["code"];
   if (typeof code != 'undefined')
   {
-     $.post("https://www.strava.com/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code, function(data) {
+  
+     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code, function(data) {
        //store token
        
        var t = "8";
@@ -224,7 +225,7 @@ const options = {
 <a href="https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&approval_prompt=force">
           <img src="img/LogInWithStrava.png" alt="Login With Strava" />
         </a>
-    <p>Activities from 2017.12.01 till 2018.02.28 (v 0.0.7)</p>
+    <p>Activities from 2017.12.01 till 2018.02.28 (v 0.0.8)</p>
   <p>BENDRAS</p>
     <table id="tableBendras">
       <thead>
@@ -317,6 +318,6 @@ const options = {
 </table> 
     
    
-     
+    
 </body>
 </html>

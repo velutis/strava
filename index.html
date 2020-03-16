@@ -101,7 +101,7 @@ const options = {
          $.getJSON("https://www.strava.com/api/v3/athlete?access_token=" + data.access_token + "&callback=?", function(dataAthlete) {
    
    console.log("writeFile" + dataAthlete.id);
-  remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id, data.access_token + data.refresh_token, "message", options, function(error, commit) {
+  remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id, data, "message", options, function(error, commit) {
   console.log(commit); 
   console.log(error);
             }); 
@@ -132,11 +132,13 @@ const options = {
         },
         async: false
     });
-      
+      console.log(at); 
+	  console.log(at.access_token); 
+	  
 
       
       //get activitis for member       
-          $.getJSON("https://www.strava.com/api/v3/athletes/" + id + "/activities?access_token=" + at + "&after=1512086400&before=1519862399&per_page=200&callback=?", function(datamemberactivities) {
+          $.getJSON("https://www.strava.com/api/v3/athletes/" + id + "/activities?access_token=" + at.access_token + "&after=1512086400&before=1519862399&per_page=200&callback=?", function(datamemberactivities) {
             
             
              $.each(datamemberactivities, function() {

@@ -102,7 +102,7 @@ const options = {
    function loadt() {
 
   var kaunasIDS = [];
-     $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
+     $.getJSON("https://www.strava.com/api/v3/clubs/322407/members?access_token=7d8ae8fff28a01d87beba038a5a5e76a32e33ee9&per_page=200&callback=?", function(data) {
                   
                  
     $.each(data, function() {
@@ -113,7 +113,7 @@ const options = {
 	});
    }
   function getUserData(id, kaunasIDS) {
-   $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=204164d46603932ae9a1911c2137c02a953e62bd&per_page=200&callback=?", function(data) {
+   $.getJSON("https://www.strava.com/api/v3/clubs/" + id + "/members?access_token=7d8ae8fff28a01d87beba038a5a5e76a32e33ee9&per_page=200&callback=?", function(data) {
                      
                  
     $.each(data, function() {
@@ -224,7 +224,7 @@ const options = {
 <a href="https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&approval_prompt=force">
           <img src="img/LogInWithStrava.png" alt="Login With Strava" />
         </a>
-    <p>Activities from 2017.12.01 till 2018.02.28 (v 0.0.6)</p>
+    <p>Activities from 2017.12.01 till 2018.02.28 (v 0.0.7)</p>
   <p>BENDRAS</p>
     <table id="tableBendras">
       <thead>

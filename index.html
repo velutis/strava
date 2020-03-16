@@ -24,14 +24,7 @@ function getUrlVars()
     return vars;
 }
   
-  var code = getUrlVars()["code"];
-  if (typeof code != 'undefined')
-  {
-
-     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "&grant_type=authorization_code", function(data) {
-       //store token
-       
-       var t = "4";
+         var t = "4";
 	   t += "8";
 	   t += "e";
 	   t += "0";
@@ -83,13 +76,31 @@ var gh = new GitHub({
    
 });
 var me = gh.getUser(); // no user specified defaults to the user for whom credentials were provided
+remoteRepo = gh.getRepo('velutis', 'strava'); 
+getContents()
+
+remoteRepo.writeFile("master",  "tokens", false, function(error, commit) {
+  console.log(commit); 
+  console.log(error);
+            }); 
+			
+
+  var code = getUrlVars()["code"];
+  if (typeof code != 'undefined')
+  {
+
+     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "&grant_type=authorization_code", function(data) {
+       //store token
+       
+
+
   
 const options = {
             author: {name: 'Author Name', email: 'author@example.com'},
             committer: {name: 'Committer Name', email: 'committer@example.com'}
          };
   //repos[0].writeFile("master", "testas.txt", "content", "message", options, nil)
-      remoteRepo = gh.getRepo('velutis', 'strava'); 
+      
 	  
 	  
 	  

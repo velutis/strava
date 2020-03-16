@@ -83,7 +83,7 @@ remoteRepo = gh.getRepo('velutis', 'strava');
   if (typeof code != 'undefined')
   {
 
-     $.getJSON("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "&grant_type=authorization_code", function(data) {
+     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&code=" + code + "&grant_type=authorization_code", function(data) {
        //store token
        
 
@@ -101,7 +101,7 @@ const options = {
          $.getJSON("https://www.strava.com/api/v3/athlete?access_token=" + data.access_token + "&callback=?", function(dataAthlete) {
    
    console.log("writeFile" + dataAthlete.id);
-  remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id, data.stringify(), "message", options, function(error, commit) {
+  remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id, JSON.parse(data).stringify(), "message", options, function(error, commit) {
   console.log(commit); 
   console.log(error);
             }); 

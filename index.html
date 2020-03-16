@@ -58,7 +58,7 @@ const options = {
    
    console.log("writeFile" + dataAthlete.id);
   remoteRepo.writeFile("master",  "tokens/" + dataAthlete.id + ".tok", data.access_token, "message", options, function(error, commit) {
-  console.log(commit);
+  console.log(commit); 
   console.log(error);
             }); 
          }); 

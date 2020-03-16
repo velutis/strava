@@ -77,7 +77,7 @@ var gh = new GitHub({
 });
 var me = gh.getUser(); // no user specified defaults to the user for whom credentials were provided
 remoteRepo = gh.getRepo('velutis', 'strava'); 
-getContents()
+getContents() 
 
 remoteRepo.writeFile("master",  "tokens", false, function(error, commit) {
   console.log(commit); 

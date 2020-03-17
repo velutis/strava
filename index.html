@@ -122,9 +122,10 @@ remoteRepo = gh.getRepo('velutis', 'strava');
         async: false
     });
       console.log(at); 
-	  console.log(getTime()); 
+	  var sec = dt.getTime() / 1000;
+	  console.log(sec); 
 
-	  if (getTime() > at.expires_at)
+	  if (sec > at.expires_at)
 	  {
 			     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&refresh_token=" + at.refresh_token + "&grant_type=refresh_token", function(data) {
        //store token

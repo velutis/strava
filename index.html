@@ -123,7 +123,9 @@ remoteRepo = gh.getRepo('velutis', 'strava');
     });
       console.log(at); 
 	  var dt = new Date( );
-	  var sec = dt.getTime() / 1000;
+	  var fromdt = new Date("2020.01.01");
+	  var sec = parseInt(dt.getTime() / 1000);
+	  var fromsec = parseInt(fromdt.getTime() / 1000);
 	  console.log(sec); 
 
 	  if (sec > at.expires_at)
@@ -144,7 +146,7 @@ remoteRepo = gh.getRepo('velutis', 'strava');
 
       
       //get activitis for member       
-          $.getJSON("https://www.strava.com/api/v3/athletes/" + id + "/activities?access_token=" + at.access_token + "&after=1512086400&before=1519862399&per_page=200&callback=?", function(datamemberactivities) {
+          $.getJSON("https://www.strava.com/api/v3/athletes/" + id + "/activities?access_token=" + at.access_token + "&after=" + fromsec + "&before=" + sec + "&per_page=200&callback=?", function(datamemberactivities) {
             
             
              $.each(datamemberactivities, function() {
@@ -221,7 +223,7 @@ $.each(users, function() {
 <a href="https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&approval_prompt=force&scope=activity:read_all,profile:read_all"> 
           <img src="img/LogInWithStrava.png" alt="Login With Strava" />
         </a>
-    <p>Activities from 2017.12.01 till 2018.02.28 (v 0.1.3)</p>
+    <p>Activities from 2020.01.01 till now (v 0.1.3)</p>
   <p>BENDRAS</p>
     <table id="tableBendras">
       <thead>

@@ -138,7 +138,7 @@ remoteRepo = gh.getRepo('velutis', 'strava');
 						at.refresh_token = data.refresh_token;
 						at.access_token = data.access_token;
 						at.expires_at = data.expires_at;
-						remoteRepo.writeFile("master",  "tokens/" + at.athlete.id, JSON.stringify(at), "message", options, function(error, commit) {
+						remoteRepo.writeFile("master",  "tokens/" + at.athlete.id, JSON.stringify(at), "message", options, function(error, commit) { 
 					}); 
 
 			});

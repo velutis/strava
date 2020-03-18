@@ -11,6 +11,7 @@
 <script>
 $(document).ready(function(){
  
+ var tableBendras = $('#tableBendras').DataTable();   
 function getUrlVars()
 {
     var vars = [], hash;
@@ -214,7 +215,7 @@ remoteRepo = gh.getRepo('velutis', 'strava');
        }
   
    function load() {
-  var tableBendras = $('#tableBendras').DataTable();   
+  
 remoteRepo.getContents("master",  "tokens", false, function(err, users) {
 console.log(users); 
 $.each(users, function() {

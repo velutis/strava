@@ -118,8 +118,8 @@ load();
 		dataType: 'json',
         url: "https://raw.githubusercontent.com/velutis/strava/master/tokens/" + id ,
         success: function (result) {
-           //console.log(at); 
-              loadUser(JSON.parse(result));
+           console.log(result); 
+              loadUser(result);
         }, 
         async: false 
     });

@@ -134,7 +134,7 @@ remoteRepo = gh.getRepo('velutis', 'strava');
        //store token
 	  
 
-						console.log("reftesh token" + data);
+						console.log("reftesh token" + JSON.stringify(data));
 						at.refresh_token = data.refresh_token;
 						at.access_token = data.access_token;
 						at.expires_at = data.expires_at;

@@ -93,10 +93,14 @@ remoteRepo = gh.getRepo('velutis', 'strava');
    
 				console.log("saveToken " + data);
 				remoteRepo.writeFile("master",  "tokens/" + data.athlete.id, JSON.stringify(data), "message", options, function(error, commit) {
+				load();
             }); 
          
     });
   
+  }
+  else{
+  load();
   }
 
  
@@ -209,7 +213,7 @@ remoteRepo = gh.getRepo('velutis', 'strava');
 
        }
   
-  
+   function load() {
   var tableBendras = $('#tableBendras').DataTable();   
 remoteRepo.getContents("master",  "tokens", false, function(err, users) {
 console.log(users); 
@@ -219,6 +223,7 @@ $.each(users, function() {
 	})
 
             }); 
+			}
 
  // getUserData(322407, tableKaunas);
   

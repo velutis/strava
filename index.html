@@ -108,14 +108,14 @@ load();
  
   function getUserData(id) {
 
-             remoteRepo.getContents("master",  "tokens/" + id, false, function(err, ctx) {
-			console.log(err);
-			console.log(ctx);
-	});
+    //         remoteRepo.getContents("master",  "tokens/" + id, false, function(err, ctx) {
+	//		console.log(err);
+	//		console.log(ctx);
+//	});
   
       
        jQuery.ajax({
-        url: "https://velutis.github.io/strava/tokens/" + id ,
+        url: "https://github.com/velutis/strava/blob/master/tokens/" + id ,
         success: function (result) {
            //console.log(at); 
               loadUser(JSON.parse(result));

@@ -109,8 +109,8 @@ load();
   function getUserData(id) {
 
              remoteRepo.getContents("master",  "tokens/" + id, false, function(err, ctx) {
-			esho (err);
-			esho (ctx);
+			console.log(err);
+			console.log(ctx);
 	});
   
       

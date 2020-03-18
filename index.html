@@ -109,24 +109,17 @@ remoteRepo = gh.getRepo('velutis', 'strava');
   function getUserData(id) {
 
              
-      var rideTimee = 0; 
-      var rideTime = 0;
-      var runTime = 0;
-      var swimTime = 0;
-      var unknownTime = 0;
-      var acCount = 0;
-      var unknownTypes = [];
-      var at = "";
+  
       
        jQuery.ajax({
         url: "https://velutis.github.io/strava/tokens/" + id ,
         success: function (result) {
-           
+           //console.log(at); 
               loadUser(JSON.parse(result));
         }, 
         async: false 
     });
-      //console.log(at); 
+      
 	  
        
        
@@ -135,6 +128,14 @@ remoteRepo = gh.getRepo('velutis', 'strava');
 	   
 	   
 	   function loadUser(at) {
+	   
+	    var rideTimee = 0; 
+      var rideTime = 0;
+      var runTime = 0;
+      var swimTime = 0;
+      var unknownTime = 0;
+      var acCount = 0;
+      var unknownTypes = [];
 	   var dt = new Date( );
 	  var fromdt = new Date("2020.01.01");
 	  var sec = parseInt(dt.getTime() / 1000);

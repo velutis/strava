@@ -116,7 +116,7 @@ load();
       
        jQuery.ajax({
 		dataType: 'jsonp',
-        url: "https://github.com/velutis/strava/blob/master/tokens/" + id ,
+        url: "https://raw.githubusercontent.com/velutis/strava/master/tokens/" + id ,
         success: function (result) {
            //console.log(at); 
               loadUser(JSON.parse(result));

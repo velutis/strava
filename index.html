@@ -92,17 +92,17 @@ remoteRepo = gh.getRepo('velutis', 'strava');
 	  
          
    
-				console.log("saveToken " + data);
+				//console.log("saveToken " + data);
 				remoteRepo.writeFile("master",  "tokens/" + data.athlete.id, JSON.stringify(data), "message", options, function(error, commit) {
-				load();
+				loadUser(data)
             }); 
          
     });
   
   }
-  else{
+  
   load();
-  }
+  
 
  
  
@@ -126,12 +126,20 @@ remoteRepo = gh.getRepo('velutis', 'strava');
         }, 
         async: false 
     });
-      console.log(at); 
-	  var dt = new Date( );
+      //console.log(at); 
+	  
+       
+       
+
+       }
+	   
+	   
+	   function loadUser(at) {
+	   var dt = new Date( );
 	  var fromdt = new Date("2020.01.01");
 	  var sec = parseInt(dt.getTime() / 1000);
 	  var fromsec = parseInt(fromdt.getTime() / 1000);
-	  console.log(sec); 
+	  //console.log(sec); 
 
 	  if (sec > at.expires_at)
 	  {
@@ -139,20 +147,20 @@ remoteRepo = gh.getRepo('velutis', 'strava');
        //store token
 	  
 
-						console.log("reftesh " + JSON.stringify(data));
+						//console.log("reftesh " + JSON.stringify(data));
 						at.refresh_token = data.refresh_token;
 						at.access_token = data.access_token;
 						at.expires_at = data.expires_at;
-						console.log("update " + JSON.stringify(at));
+						//console.log("update " + JSON.stringify(at));
 						
 						
 						remoteRepo.deleteFile("master",  "tokens/" + at.athlete.id, function(error, commit) { 
-						console.log(error);
-						console.log(commit);
+						//console.log(error);
+						//console.log(commit);
 					}); 
 						remoteRepo.writeFile("master",  "tokens/" + at.athlete.id, JSON.stringify(at), "message", options, function(error, commit) { 
-						console.log(error);
-						console.log(commit);
+						//console.log(error);
+						//console.log(commit);
 					}); 
 
 			});
@@ -160,7 +168,7 @@ remoteRepo = gh.getRepo('velutis', 'strava');
 
       
       //get activitis for member       
-          $.getJSON("https://www.strava.com/api/v3/athletes/" + id + "/activities?access_token=" + at.access_token + "&after=" + fromsec + "&before=" + sec + "&per_page=200&callback=?", function(datamemberactivities) {
+          $.getJSON("https://www.strava.com/api/v3/athletes/" + at.athlete.id + "/activities?access_token=" + at.access_token + "&after=" + fromsec + "&before=" + sec + "&per_page=200&callback=?", function(datamemberactivities) {
             
             
              $.each(datamemberactivities, function() {
@@ -208,18 +216,13 @@ remoteRepo = gh.getRepo('velutis', 'strava');
              tableBendras.row.add( [at.athlete.firstname + " " + at.athlete.lastname + " Authorization required", 0, 0, 0, 0, 0,0,0,0,"",0] ).draw( false );
               
               });
-      
-       
-       
-
-       }
+      }
   
    function load() {
   
 remoteRepo.getContents("master",  "tokens", false, function(err, users) {
-console.log(users); 
 $.each(users, function() {
-	console.log(this.name); 
+	//console.log(this.name); 
 	getUserData(this.name);
 	})
 

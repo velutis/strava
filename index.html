@@ -153,7 +153,7 @@ remoteRepo = gh.getRepo('velutis', 'strava');
              $.each(datamemberactivities, function() {
                  acCount = acCount + 1;
                if (this.type == "Ride" || this.type == "VirtualRide")
-                 {
+                 { 
                        rideTime += this.moving_time / 3600;
                  }
                else if (this.type == "Run" || this.type == "NordicSki")

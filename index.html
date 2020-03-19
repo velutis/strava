@@ -133,15 +133,9 @@ load();
 	   
 	   function loadUser(at) {
 	   
-	    var rideTimee = 0; 
-      var rideTime = 0;
-      var runTime = 0;
-      var swimTime = 0;
-      var unknownTime = 0;
-      var acCount = 0;
-      var unknownTypes = [];
+	   
 	   var dt = new Date( );
-	  var fromdt = new Date("2020.01.01");
+	  var fromdt = new Date("2020.03.08");
 	  var sec = parseInt(dt.getTime() / 1000);
 	  var fromsec = parseInt(fromdt.getTime() / 1000);
 	  //console.log(sec); 
@@ -158,6 +152,8 @@ load();
 						at.expires_at = data.expires_at;
 						console.log("update " + JSON.stringify(at));
 						
+						loadActivities(at);
+						
 						
 						remoteRepo.deleteFile("master",  "tokens/" + at.athlete.id, function(error, commit) { 
 						console.log(error);
@@ -172,10 +168,23 @@ load();
 
 			});
 	  }
+	  else
+	  loadActivities(at)
+	  }
 
-      
+       function loadActivities(at) {
       //get activitis for member       
-          $.getJSON("https://www.strava.com/api/v3/athletes/" + at.athlete.id + "/activities?access_token=" + at.access_token + "&after=" + fromsec + "&before=" + sec + "&per_page=200&callback=?", function(datamemberactivities) {
+
+       var rideTimee = 0; 
+      var rideTime = 0;
+      var runTime = 0;
+      var swimTime = 0;
+      var unknownTime = 0;
+      var acCount = 0;
+      var unknownTypes = [];
+	  
+	  
+	            $.getJSON("https://www.strava.com/api/v3/athletes/" + at.athlete.id + "/activities?access_token=" + at.access_token + "&after=" + fromsec + "&before=" + sec + "&per_page=200&callback=?", function(datamemberactivities) {
             
             
              $.each(datamemberactivities, function() {
@@ -223,7 +232,7 @@ load();
              tableBendras.row.add( [at.athlete.firstname + " " + at.athlete.lastname + " Authorization required", 0, 0, 0, 0, 0,0,0,0,"",0] ).draw( false );
               
               });
-      }
+			  }
   
    function load() {
   

@@ -135,9 +135,9 @@ load();
 	   
 	   
 	   var dt = new Date( );
-	  var fromdt = new Date("2020.03.08");
+	  
 	  var sec = parseInt(dt.getTime() / 1000);
-	  var fromsec = parseInt(fromdt.getTime() / 1000);
+
 	  //console.log(sec); 
 
 	  if (sec > at.expires_at)
@@ -174,7 +174,8 @@ load();
 
        function loadActivities(at) {
       //get activitis for member       
-
+	  var fromdt = new Date("2020.03.08");
+	  var fromsec = parseInt(fromdt.getTime() / 1000);
        var rideTimee = 0; 
       var rideTime = 0;
       var runTime = 0;

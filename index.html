@@ -145,23 +145,23 @@ load();
 			     $.post("https://www.strava.com/api/v3/oauth/token?client_id=21332&client_secret=26a0c5a8c13189765f334b7d645ef36f8ab6ab83&refresh_token=" + at.refresh_token + "&grant_type=refresh_token", function(data) {
        //store token
 	  
-console.log("orif " + JSON.stringify(at));
-						console.log("reftesh " + JSON.stringify(data));
+						//console.log("orif " + JSON.stringify(at));
+						//console.log("reftesh " + JSON.stringify(data));
 						at.refresh_token = data.refresh_token;
 						at.access_token = data.access_token;
 						at.expires_at = data.expires_at;
-						console.log("update " + JSON.stringify(at));
+						//console.log("update " + JSON.stringify(at));
 						
 						loadActivities(at);
 						
 						
 						remoteRepo.deleteFile("master",  "tokens/" + at.athlete.id, function(error, commit) { 
-						console.log(error);
-						console.log(commit);
+						//console.log(error);
+						//console.log(commit);
 						
 						remoteRepo.writeFile("master",  "tokens/" + at.athlete.id, JSON.stringify(at), "message", options, function(error, commit) { 
-						console.log(error);
-						console.log(commit);
+					//	console.log(error);
+					//	console.log(commit);
 					}); 
 					}); 
 						
@@ -261,7 +261,7 @@ $.each(users, function() {
 <a href="https://www.strava.com/oauth/authorize?client_id=21332&response_type=code&redirect_uri=https://velutis.github.io/strava/&approval_prompt=force&scope=activity:read_all"> 
           <img src="img/LogInWithStrava.png" alt="Login With Strava" />
         </a>
-    <p>Activities from 2020.01.01 till now (v 0.1.3)</p>
+    <p>Activities from 2020.03.08 till now (v 0.1.3)</p>
   <p>BENDRAS</p>
     <table id="tableBendras">
       <thead>

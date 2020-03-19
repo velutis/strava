@@ -152,21 +152,23 @@ load();
        //store token
 	  
 
-						//console.log("reftesh " + JSON.stringify(data));
+						console.log("reftesh " + JSON.stringify(data));
 						at.refresh_token = data.refresh_token;
 						at.access_token = data.access_token;
 						at.expires_at = data.expires_at;
-						//console.log("update " + JSON.stringify(at));
+						console.log("update " + JSON.stringify(at));
 						
 						
 						remoteRepo.deleteFile("master",  "tokens/" + at.athlete.id, function(error, commit) { 
 						console.log(error);
 						console.log(commit);
-					}); 
+						
 						remoteRepo.writeFile("master",  "tokens/" + at.athlete.id, JSON.stringify(at), "message", options, function(error, commit) { 
 						console.log(error);
 						console.log(commit);
 					}); 
+					}); 
+						
 
 			});
 	  }
